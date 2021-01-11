@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"os"
 	"path"
 	"path/filepath"
@@ -16,7 +15,6 @@ import (
 
 	"github.com/ddvk/rmfakecloud/internal/config"
 	"github.com/ddvk/rmfakecloud/internal/messages"
-	"github.com/gin-gonic/gin"
 )
 
 // Storage file system document storage
@@ -240,48 +238,4 @@ func (fs *Storage) UpdateUser(u *messages.User) (err error) {
 	err = ioutil.WriteFile(fullPath, js, 0644)
 
 	return
-}
-
-func (fs *Storage) RegisterRoutes(router *gin.Engine) {
-
-	router.GET("/storage", func(c *gin.Context) {
-		id := c.Query("id")
-		if id == "" {
-			c.String(400, "set up us the bomb")
-			return
-		}
-
-		//todo: storage provider
-		log.Printf("Requestng Id: %s\n", id)
-
-		reader, err := fs.GetDocument(id)
-		defer reader.Close()
-
-		if err != nil {
-			log.Error(err)
-			c.String(500, "internal error")
-			c.Abort()
-			return
-		}
-
-		c.DataFromReader(http.StatusOK, -1, "application/octet-stream", reader, nil)
-	})
-	//todo: pass the token in the url
-	router.PUT("/storage", func(c *gin.Context) {
-		id := c.Query("id")
-		log.Printf("Uploading id %s\n", id)
-		body := c.Request.Body
-		defer body.Close()
-
-		err := fs.StoreDocument(body, id)
-		if err != nil {
-			log.Error(err)
-			c.String(500, "set up us the bomb")
-			c.Abort()
-			return
-		}
-
-		c.JSON(200, gin.H{})
-	})
-
 }
