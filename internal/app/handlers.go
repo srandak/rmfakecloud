@@ -36,7 +36,7 @@ func registerDevice(c *gin.Context) {
 	// generate the JWT token
 	expirationTime := time.Now().Add(356 * 24 * time.Hour)
 
-	claims := &messages.Auth0token{
+	claims := &messages.Auth0Token{
 		DeviceDesc: json.DeviceDesc,
 		DeviceId:   json.DeviceId,
 		StandardClaims: jwt.StandardClaims{
@@ -129,8 +129,8 @@ func createAuthenticationToken(c *gin.Context) {
 
 	expirationTime := time.Now().Add(30 * 24 * time.Hour)
 
-	claims := &messages.Auth0token{
-		Profile: &messages.Auth0profile{
+	claims := &messages.Auth0Token{
+		Profile: &messages.Auth0Profile{
 			UserId:        "auth0|1234",
 			IsSocial:      false,
 			Name:          "rmFake",

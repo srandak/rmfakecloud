@@ -142,14 +142,14 @@ func (u *User) NewUserCode() (code string, err error) {
 	return
 }
 
-type Auth0token struct {
-	Profile    *Auth0profile `json:"auth0-profile,omitempty"`
+type Auth0Token struct {
+	Profile    *Auth0Profile `json:"auth0-profile,omitempty"`
 	DeviceDesc string        `json:"device-desc"`
 	DeviceId   string        `json:"device-id"`
 	Scopes     string        `json:"scopes,omitempty"`
 	jwt.StandardClaims
 }
-type Auth0profile struct {
+type Auth0Profile struct {
 	UserId        string `json:"UserID'`
 	IsSocial      bool
 	ClientId      string `json:"ClientID'`
@@ -165,10 +165,11 @@ type Auth0profile struct {
 	UpdatedAt     time.Time
 }
 
-func (u *User) NewAuth0Token(deviceDesc, deviceId string) *jwt.Token {
+//NewAuth0token creates a new authorozation token
+func (u *User) NewAuth0token(deviceDesc, deviceId string) *jwt.Token {
 	expirationTime := time.Now().Add(30 * 24 * time.Hour)
-	claims := &Auth0token{
-		Profile: &Auth0profile{
+	claims := &Auth0Token{
+		Profile: &Auth0Profile{
 			UserId:        "auth0|" + u.Id,
 			IsSocial:      false,
 			Name:          u.Name,

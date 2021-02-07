@@ -183,7 +183,10 @@ func (fs *Storage) GetUser(id string) (response *messages.User, err error) {
 }
 
 func (fs *Storage) GetUsers() (users []*messages.User, err error) {
+
 	dataDir := fs.Cfg.DataDir
+
+	log.Info("Fullpath:", dataDir)
 
 	err = filepath.Walk(dataDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -192,6 +195,8 @@ func (fs *Storage) GetUsers() (users []*messages.User, err error) {
 
 		if info.IsDir() {
 			if user, err := fs.GetUser(info.Name()); err == nil {
+				log.Info("getting users", len(users), user)
+
 				users = append(users, user)
 			}
 		}

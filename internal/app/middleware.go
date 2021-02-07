@@ -31,7 +31,7 @@ func authMiddleware(jwtSecretKey []byte) gin.HandlerFunc {
 	}
 }
 
-func getToken(c *gin.Context, jwtSecretKey []byte) (claims *messages.Auth0token, err error) {
+func getToken(c *gin.Context, jwtSecretKey []byte) (claims *messages.Auth0Token, err error) {
 	auth := c.Request.Header["Authorization"]
 
 	if len(auth) < 1 {
@@ -45,7 +45,7 @@ func getToken(c *gin.Context, jwtSecretKey []byte) (claims *messages.Auth0token,
 		return nil, errors.New("missing token")
 	}
 
-	claims = &messages.Auth0token{}
+	claims = &messages.Auth0Token{}
 	_, err = jwt.ParseWithClaims(token[1], claims, func(token *jwt.Token) (interface{}, error) {
 		return jwtSecretKey, nil
 	})

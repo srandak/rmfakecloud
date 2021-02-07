@@ -92,17 +92,18 @@ func Login(c *gin.Context) {
 
 	if user == nil {
 		log.Error(err)
-		c.JSON(http.StatusUnauthorized, "Invalid email or password")
+
+		c.JSON(http.StatusUnauthorized, "Invalid email")
 		return
 	}
 
 	if ok, err := user.CheckPassword(form.Password); err != nil || !ok {
 		log.Error(err)
-		c.JSON(http.StatusUnauthorized, "Invalid email or password")
+		c.JSON(http.StatusUnauthorized, "Invalid password")
 		return
 	}
 
-	token := user.NewAuth0Token("ui", "")
+	token := user.NewAuth0token("ui", "")
 	tokenString, err := token.SignedString(_cfg.JWTSecretKey)
 	if err != nil {
 		util.BadReq(c, err.Error())

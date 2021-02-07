@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { userService, authenticationService } from '@/_services';
+import { userService } from './_services/user.service';
+import { authenticationService } from './_services/authentication.service';
 
-class HomePage extends React.Component {
+export default class HomePage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -37,5 +38,3 @@ class HomePage extends React.Component {
         );
     }
 }
-
-export { HomePage };

@@ -14,9 +14,12 @@ import { authenticationService } from './_services/authentication.service';
 
 import { PrivateRoute } from './_components/PrivateRoute';
 
-import { HomePage } from '../Components/Home/HomePage';
-import { AdminPage } from '../Components/Admin/AdminPage';
-import { LoginPage } from '../Components/Login/LoginPage';
+import HomePage from './HomePage';
+import AdminPage from './AdminPage';
+import LoginPage from './LoginPage';
+
+import { configureFakeBackend } from './_helpers';
+configureFakeBackend();
 
 export default function App() {
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { userService } from '../../_services';
+import { userService } from './_services/user.service';
 
-class AdminPage extends React.Component {
+export default class AdminPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -35,5 +35,3 @@ class AdminPage extends React.Component {
         );
     }
 }
-
-export { AdminPage };
